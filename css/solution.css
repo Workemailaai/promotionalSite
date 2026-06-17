@@ -1,0 +1,46 @@
+.solution {
+  position: relative;
+  height: 1080px;
+  padding-top: 80px;
+  padding-bottom: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    linear-gradient(0deg, rgba(10, 15, 21, 0.5) 0%, rgba(10, 15, 21, 0.5) 100%),
+    #00a99d;
+  color: #ffffff;
+}
+
+.solution__overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(0deg, rgba(2, 7, 12, 0.5) 0%, rgba(2, 7, 12, 0.5) 100%),
+    url("../images/background.png") center / cover no-repeat,
+    rgba(2, 7, 12, 0.35);
+  backdrop-filter: blur(2px);
+  pointer-events: none;
+}
+
+.solution__content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.solution__title {
+  max-width: 100%;
+  color: #ffffff;
+}
+
+.solution__text {
+  max-width: 790px;
+  color: rgba(255, 255, 255, 0.8);
+}

@@ -1,0 +1,139 @@
+.prices {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 64px;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.5) 100%), #f0f1f5;
+}
+
+.prices__grid {
+  width: 1330px;
+  display: flex;
+  gap: 20px;
+}
+
+.price-card {
+  flex: 1 1 0;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  overflow: hidden;
+  border-radius: 32px;
+  background: #ffffff;
+}
+
+.price-card--accent {
+  background: #222631;
+  color: #ffffff;
+}
+
+.price-card__top {
+  width: 295px;
+  height: 40px;
+  box-sizing: border-box;
+  padding: 2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  border-radius: 66px;
+  background: #f0f1f5;
+}
+
+.price-card--accent .price-card__top {
+  background: #0a0f15;
+}
+
+.price-card__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 8px 20px;
+  border-radius: 48px;
+  font-size: 16px;
+  line-height: 16px;
+  font-weight: 400;
+  white-space: nowrap;
+  flex-shrink: 0;
+  background: #222631;
+  color: #ffffff;
+}
+
+.price-card--accent .price-card__badge {
+  background: #00a99d;
+}
+
+.price-card__events {
+  display: inline-flex;
+  align-items: center;
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0 14px 0 10px;
+  font-size: 16px;
+  line-height: 16px;
+  font-weight: 400;
+  white-space: nowrap;
+  color: rgba(34, 38, 49, 0.8);
+}
+
+.price-card--accent .price-card__events {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.price-card__content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.price-card--accent .price-card__title {
+  color: #ffffff;
+}
+
+.price-card--accent .price-card__text {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.price-card__list {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  list-style: none;
+}
+
+.price-card__list li {
+  padding-left: 32px;
+  position: relative;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+.price-card__list li::before {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "";
+  background-color: #00a99d;
+  mask: url("../icons/tick.svg") center / contain no-repeat;
+  -webkit-mask: url("../icons/tick.svg") center / contain no-repeat;
+}
+
+.price-card--accent .price-card__list li::before {
+  background-color: #ffffff;
+}
+
+.price-card__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.price-card__button {
+  margin-top: auto;
+}
