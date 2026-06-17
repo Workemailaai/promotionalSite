@@ -26,6 +26,10 @@
   max-width: 1008px;
 }
 
+#advantages{
+  padding-right: 0px;
+}
+
 .advantages .section__text {
   max-width: 624px;
 }
