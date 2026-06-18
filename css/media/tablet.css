@@ -1,4 +1,10 @@
-@media (max-width: 1193px) {
+@media screen and (min-width: 1194px) and (max-width: 1439px) {
+  /* Стили для планшета (горизонтально): 1194–1439px */
+}
+
+@media screen and (min-width: 834px) and (max-width: 1193px) {
+  /* Стили для планшета (вертикально): 834–1193px */
+
   body {
     min-width: 0;
   }
