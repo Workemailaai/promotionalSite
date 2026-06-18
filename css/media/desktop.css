@@ -1,14 +1,7 @@
 @media screen and (min-width: 1920px) {
-  body {
-    min-width: 1920px;
-    overflow-x: auto;
-  }
-
-  .page {
-    width: 1920px;
-  }
-
   .hero__crown-badge {
+    top: 19.8%;
+    width: 14%;
     animation: promo-crown-shake-soft 2.5s linear 2.889s infinite;
   }
 }
@@ -312,7 +305,9 @@
   height: 820px;
   position: absolute;
   top: 52px;
-  left: 0;
+  right: auto;
+  left: calc(50% - var(--hero-media-center-x));
+  margin-inline: 0;
   z-index: 2;
   overflow: visible;
 }
@@ -335,9 +330,11 @@
 }
 
 .hero__inner {
-  width: 1600px;
+  --hero-media-center-x: 800px;
+  width: 100%;
+  max-width: 1600px;
   height: 872px;
-  margin: 0 auto;
+  margin-inline: auto;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -374,28 +371,29 @@
 }
 
 .hero__phone {
-  width: 350px;
-  height: 707px;
+  width: 633px;
+  height: 970px;
+  max-width: none;
   position: absolute;
   object-fit: contain;
 }
 
 .hero__phone--left {
-  top: 349px;
-  left: 346px;
+  top: 256px;
+  left: 98.5px;
   z-index: 1;
 }
 
 .hero__phone-slot--center {
-  top: 269px;
-  left: 625px;
-  width: 350px;
-  height: 707px;
+  top: 141.4px;
+  left: 483.5px;
+  width: 633px;
+  height: 970px;
 }
 
 .hero__phone--right {
-  top: 349px;
-  left: 904px;
+  top: 256px;
+  left: 868.5px;
   z-index: 2;
 }
 
@@ -404,7 +402,8 @@
   padding: 0;
   position: absolute;
   top: 0;
-  left: 0;
+  right: auto;
+  left: calc(50% - var(--hero-media-center-x));
   width: 1600px;
   height: 872px;
   z-index: 5;
@@ -433,18 +432,18 @@
 }
 
 .hero__item:nth-child(1) {
-  top: 346px;
-  left: 853px;
+  top: 240px;
+  left: 888.5px;
 }
 
 .hero__item:nth-child(2) {
-  top: 474px;
-  left: 187px;
+  top: 420px;
+  left: 58.5px;
 }
 
 .hero__item:nth-child(3) {
-  top: 500px;
-  left: 1151px;
+  top: 460px;
+  left: 1288.5px;
 }
 
 .hero__actions {

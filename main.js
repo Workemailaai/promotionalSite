@@ -125,7 +125,7 @@ const createAdvantagesCarousel = () => {
   };
 };
 
-// Создание колоды карточек в блоке «Сценарии» (только с 1440px)
+// Создание колоды карточек в блоке «Сценарии» (с 834px)
 const createCasesDeck = () => {
   // Корневой блок карусели сценариев
   const carousel = document.querySelector('.cases__carousel');
@@ -472,7 +472,7 @@ const setupAdvantagesCarousel = () => {
   }
 };
 
-// Синхронизация точек пагинации со скроллом карточек «Сценарии» (до 1439px)
+// Синхронизация точек пагинации со скроллом карточек «Сценарии» (только mobile)
 const createCasesScrollDots = () => {
   // Корневой блок карусели сценариев
   const carousel = document.querySelector('.cases__carousel');
@@ -577,12 +577,12 @@ const createCasesScrollDots = () => {
   };
 };
 
-// Проверка режима touch-scroll для блока «Сценарии»
-const isCasesTouchScrollMode = () => window.matchMedia('(max-width: 1439px)').matches;
+// Проверка режима touch-scroll для блока «Сценарии» (только mobile до 833px)
+const isCasesTouchScrollMode = () => window.matchMedia('(max-width: 833px)').matches;
 
 // Определение брейкпоинта колоды «Сценарии» по ширине экрана
 const getCasesDeckBreakpoint = () => {
-  if (window.matchMedia('(min-width: 1440px)').matches) {
+  if (window.matchMedia('(min-width: 834px)').matches) {
     return 'wide';
   }
 

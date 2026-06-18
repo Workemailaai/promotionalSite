@@ -1,13 +1,4 @@
 @media screen and (min-width: 1440px) and (max-width: 1919px) {
-  body {
-    min-width: 1440px;
-    overflow-x: auto;
-  }
-
-  .page {
-    width: 1440px;
-  }
-
   .header,
   .section,
   .solution,
@@ -41,8 +32,11 @@
   }
 
   .hero__inner {
-    width: 1280px;
+    --hero-media-center-x: 720px;
+    width: 100%;
+    max-width: 1280px;
     height: 708px;
+    margin-inline: auto;
   }
 
   .hero__title {
@@ -54,7 +48,10 @@
     width: 1600px;
     height: 820px;
     top: -116px;
-    left: -80px;
+    right: auto;
+    left: calc(50% - var(--hero-media-center-x));
+    margin-inline: 0;
+    transform: none;
   }
 
   .hero__media::after {
@@ -69,6 +66,11 @@
       rgba(255, 255, 255, 0.7) 80%,
       rgba(255, 255, 255, 1) 100%
     );
+  }
+
+  .hero__phone {
+    width: 350px;
+    height: 707px;
   }
 
   .hero__phone--left {
@@ -91,7 +93,8 @@
   .hero__list {
     width: 1440px;
     height: 820px;
-    left: -80px;
+    right: auto;
+    left: calc(50% - var(--hero-media-center-x));
   }
 
   .hero__item:nth-child(1) {
@@ -111,6 +114,7 @@
 
   .hero__actions {
     width: 634px;
+    align-self: center;
     display: inline-flex;
     justify-content: flex-start;
     align-items: center;

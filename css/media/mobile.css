@@ -7,9 +7,7 @@
 
   .page {
     width: 100%;
-    max-width: 412px;
-    margin-right: auto;
-    margin-left: auto;
+    max-width: none;
   }
 
   .header,
@@ -385,7 +383,7 @@
     padding-right: 0;
     padding-left: 0;
     box-sizing: border-box;
-    gap: 8px;
+    gap: 32px;
   }
 
   .cases__stack {
@@ -398,6 +396,8 @@
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
+    scroll-padding-inline: calc((100% - 266px) / 2);
+    padding-inline: calc((100% - 266px) / 2);
     scrollbar-width: none;
     touch-action: pan-x;
   }
@@ -810,8 +810,8 @@
   }
 
   .app__content .button {
-    align-self: stretch;
-    width: 100%;
+    align-self: center;
+    width: auto;
     height: 56px;
   }
 
@@ -828,10 +828,6 @@
 
 @media screen and (max-width: 375px) {
   /* Адаптив для 375px, на всякий для ТЗ запасной вариант*/
-
-  .page {
-    max-width: 375px;
-  }
 
   .header,
   .section,
