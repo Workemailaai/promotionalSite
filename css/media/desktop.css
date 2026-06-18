@@ -1,4 +1,3 @@
-@media screen and (min-width: 1920px) {
   body {
     min-width: 1920px;
     overflow-x: auto;
@@ -364,7 +363,7 @@
   font-size: 96px;
   line-height: 88px;
   font-weight: 500;
-  letter-spacing: -4%;
+  letter-spacing: -0.04em;
 }
 
 .hero__phone {
@@ -1226,4 +1225,3 @@
   white-space: nowrap;
 }
 
-}
