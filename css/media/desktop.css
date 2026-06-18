@@ -1059,11 +1059,10 @@
 
 .review-card {
   width: 520px;
-  height: 500px;
   padding: 32px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 56px;
   overflow: hidden;
   border-radius: 20px;
   box-shadow: 0 0 80px rgba(255, 255, 255, 0.1) inset;

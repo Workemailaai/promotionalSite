@@ -1,5 +1,5 @@
-// Порог touch-scroll — синхронизирован с touch-scroll.css
-const TOUCH_SCROLL_MAX_WIDTH = 1193;
+// Порог touch-scroll — планшет и мобилка без кнопок карусели
+const TOUCH_SCROLL_MAX_WIDTH = 1439;
 
 // Классы позиционирования колоды «Сценарии»
 const CASES_CARD_STATE_CLASSES = [
@@ -29,7 +29,10 @@ let destroyCasesDeck = null;
 // Функция очистки синхронизации точек со скроллом «Сценарии»
 let destroyCasesScrollDots = null;
 
-// Создание карусели карточек в блоке «Преимущества» (только с 1194px)
+// Текущий брейкпоинт колоды «Сценарии» для переинициализации при смене ширины
+let casesDeckBreakpoint = '';
+
+// Создание карусели карточек в блоке «Преимущества» (только с 1440px)
 const createAdvantagesCarousel = () => {
   // Контейнер с обрезкой видимой области
   const viewport = document.querySelector('.advantages__viewport');
@@ -119,7 +122,7 @@ const createAdvantagesCarousel = () => {
   };
 };
 
-// Создание колоды карточек в блоке «Сценарии» (только с 1194px)
+// Создание колоды карточек в блоке «Сценарии» (только с 1440px)
 const createCasesDeck = () => {
   // Корневой блок карусели сценариев
   const carousel = document.querySelector('.cases__carousel');
@@ -148,12 +151,12 @@ const createCasesDeck = () => {
     return null;
   }
 
-  // Порядок индексов карточек: сзади, середина, сверху (сверху — «Школы»)
-  let stackOrder = [1, 2, 0];
+  // Порядок индексов: сзади, середина, сверху (сверху — «Школы», индекс 0)
+  let stackOrder = [2, 1, 0];
   // Флаг блокировки повторного клика во время анимации
   let isAnimating = false;
-  // Длительность анимации вылета (мс), синхронно с CSS
-  const exitDurationMs = 50;
+  // Длительность анимации вылета (мс), синхронно с CSS transition 0.45s
+  const exitDurationMs = 450;
 
   // Назначение позиций в стопке по текущему порядку
   const applyStackPositions = () => {
@@ -181,17 +184,21 @@ const createCasesDeck = () => {
     });
   };
 
-  // Завершение шага: улетевшая карточка мгновенно становится задней
-  const finishDeckStep = (topCard, nextOrder) => {
-    topCard.classList.remove('cases__card--exit-down', 'cases__card--exit-up');
-    topCard.classList.add('cases__card--instant');
-    topCard.classList.remove('cases__card--top', 'cases__card--middle');
-    topCard.classList.add('cases__card--back');
-    topCard.setAttribute('aria-hidden', 'true');
+  // Завершение шага: сброс позиций колоды после анимации вылета
+  const finishDeckStep = (nextOrder) => {
     stackOrder = nextOrder;
 
+    cards.forEach((card) => {
+      card.classList.remove('cases__card--exit-down', 'cases__card--exit-up');
+      card.classList.add('cases__card--instant');
+    });
+
+    applyStackPositions();
+
     requestAnimationFrame(() => {
-      topCard.classList.remove('cases__card--instant');
+      cards.forEach((card) => {
+        card.classList.remove('cases__card--instant');
+      });
     });
 
     updateDots();
@@ -235,7 +242,7 @@ const createCasesDeck = () => {
     const exitClass = direction === 1 ? 'cases__card--exit-down' : 'cases__card--exit-up';
     const nextOrder = direction === 1
       ? [stackOrder[2], stackOrder[0], stackOrder[1]]
-      : [stackOrder[2], stackOrder[1], stackOrder[0]];
+      : [stackOrder[1], stackOrder[2], stackOrder[0]];
 
     topCard.classList.add(exitClass);
     promoteStackBelow(direction);
@@ -251,7 +258,7 @@ const createCasesDeck = () => {
 
       isStepCompleted = true;
       topCard.removeEventListener('transitionend', onExitEnd);
-      finishDeckStep(topCard, nextOrder);
+      finishDeckStep(nextOrder);
     };
 
     const onExitEnd = (event) => {
@@ -320,7 +327,7 @@ const setupAdvantagesCarousel = () => {
   }
 };
 
-// Синхронизация точек пагинации со скроллом карточек «Сценарии» (до 1193px)
+// Синхронизация точек пагинации со скроллом карточек «Сценарии» (до 1439px)
 const createCasesScrollDots = () => {
   // Корневой блок карусели сценариев
   const carousel = document.querySelector('.cases__carousel');
@@ -385,12 +392,23 @@ const createCasesScrollDots = () => {
   };
 };
 
+// Определение брейкпоинта колоды «Сценарии» по ширине экрана
+const getCasesDeckBreakpoint = () => {
+  if (window.matchMedia('(min-width: 1440px)').matches) {
+    return 'wide';
+  }
+
+  return '';
+};
+
 // Переключение «Сценарии» между колодой и touch-scroll
 const setupCasesDeck = () => {
   // Контейнер стопки для сброса состояния карточек
   const stack = document.querySelector('.cases__stack');
 
   if (isTouchScrollMode()) {
+    casesDeckBreakpoint = '';
+
     if (destroyCasesDeck) {
       destroyCasesDeck();
       destroyCasesDeck = null;
@@ -412,9 +430,20 @@ const setupCasesDeck = () => {
     destroyCasesScrollDots = null;
   }
 
-  if (!destroyCasesDeck) {
-    destroyCasesDeck = createCasesDeck();
+  const nextBreakpoint = getCasesDeckBreakpoint();
+
+  if (destroyCasesDeck && casesDeckBreakpoint === nextBreakpoint) {
+    return;
   }
+
+  casesDeckBreakpoint = nextBreakpoint;
+
+  if (destroyCasesDeck) {
+    destroyCasesDeck();
+    destroyCasesDeck = null;
+  }
+
+  destroyCasesDeck = createCasesDeck();
 };
 
 // Инициализация интерактивных блоков с учётом текущего брейкпоинта

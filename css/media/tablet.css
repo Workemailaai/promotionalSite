@@ -1,5 +1,327 @@
 @media screen and (min-width: 1194px) and (max-width: 1439px) {
-  /* Стили для планшета (горизонтально): 1194–1439px */
+  body {
+    min-width: 1194px;
+    overflow-x: auto;
+  }
+
+  .page {
+    width: 1194px;
+  }
+
+  .header,
+  .section,
+  .solution,
+  .app,
+  .footer {
+    padding-right: 117px;
+    padding-left: 117px;
+  }
+
+  .header__nav,
+  .footer__nav {
+    display: none;
+  }
+
+  .header__logo {
+    flex: 1 1 0;
+    width: auto;
+  }
+
+  .header__button {
+    font-size: 16px;
+    line-height: 16px;
+  }
+
+  .footer {
+    gap: 12px;
+  }
+
+  .footer__logo {
+    flex: 1 1 0;
+    width: auto;
+  }
+
+  .footer__copy {
+    width: auto;
+  }
+
+  .section__layout {
+    gap: 12px;
+  }
+
+  .section__label {
+    flex: 0 0 231px;
+    width: 231px;
+  }
+
+  .section__content {
+    gap: 64px;
+  }
+
+  .problem .section__text {
+    max-width: 496px;
+  }
+
+  .problem__card {
+    padding-top: 20px;
+    padding-right: 24px;
+    padding-bottom: 20px;
+  }
+
+  .hero {
+    height: 620px;
+    padding: 56px 117px;
+  }
+
+  .hero__inner {
+    width: 960px;
+    height: 508px;
+  }
+
+  .hero__content {
+    gap: 12px;
+  }
+
+  .hero__subtitle {
+    font-size: 20px;
+    line-height: 22px;
+  }
+
+  .hero__title {
+    font-size: 56px;
+    line-height: 56px;
+    letter-spacing: 0;
+  }
+
+  .hero__media {
+    width: 1600px;
+    height: 620px;
+    top: -50px;
+    left: -117px;
+  }
+
+  .hero__media::after {
+    top: 487px;
+    right: 0;
+    bottom: -120px;
+    left: 0;
+  }
+
+  .hero__phone {
+    width: 277px;
+    height: 560px;
+  }
+
+  .hero__phone--center {
+    width: 278px;
+  }
+
+  .hero__phone--left {
+    top: 242px;
+    left: 238px;
+  }
+
+  .hero__phone--center {
+    top: 179px;
+    left: 458px;
+  }
+
+  .hero__phone--right {
+    top: 242px;
+    left: 679px;
+  }
+
+  .hero__list {
+    width: 1194px;
+    height: 620px;
+    top: 0;
+    left: -117px;
+  }
+
+  .hero__item:nth-child(1) {
+    top: 145px;
+    left: 643px;
+  }
+
+  .hero__item:nth-child(2) {
+    top: 261px;
+    left: 80px;
+  }
+
+  .hero__item:nth-child(3) {
+    top: 300px;
+    left: 850px;
+  }
+
+  .hero__actions {
+    width: 716px;
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .hero__actions .button--primary,
+  .hero__actions .button--secondary {
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto;
+    height: 56px;
+    font-size: 18px;
+    line-height: 18px;
+    font-weight: 500;
+  }
+
+  .solution {
+    height: 764px;
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  .solution__text {
+    max-width: 636px;
+  }
+
+  .process .section__text {
+    max-width: 520px;
+  }
+
+  .process__grid {
+    gap: 12px;
+  }
+
+  .process__card {
+    width: calc(50% - 6px);
+    height: 156px;
+  }
+
+  .cases__carousel {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .cases__stack {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    height: auto;
+    position: static;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .cases__stack::-webkit-scrollbar {
+    display: none;
+  }
+
+  .cases__card,
+  .cases__card--top,
+  .cases__card--middle,
+  .cases__card--back,
+  .cases__card--exit-down,
+  .cases__card--exit-up {
+    position: relative;
+    top: auto;
+    left: auto;
+    flex: 0 0 960px;
+    width: 960px;
+    height: 300px;
+    transform: none;
+    opacity: 1;
+    transition: none;
+    will-change: auto;
+    scroll-snap-align: center;
+    pointer-events: auto;
+  }
+
+  .cases__arrow {
+    display: none;
+  }
+
+  .cases__controls {
+    width: auto;
+    justify-content: center;
+  }
+
+  #advantages {
+    padding-right: 0;
+    padding-left: 117px;
+  }
+
+  .advantages .section__head {
+    max-width: none;
+  }
+
+  .advantages .section__text {
+    max-width: 624px;
+  }
+
+  .advantages__viewport {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .advantages__viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .advantages__grid {
+    gap: 12px;
+    transition: none;
+    will-change: auto;
+    transform: none;
+  }
+
+  .advantages__card {
+    width: 353px;
+    min-height: 353px;
+    scroll-snap-align: start;
+  }
+
+  .advantages__controls {
+    display: none;
+  }
+
+  .prices .section__text {
+    max-width: 636px;
+  }
+
+  .prices__grid {
+    width: 100%;
+    gap: 12px;
+  }
+
+  .reviews__grid {
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    gap: 12px;
+  }
+
+  .review-card {
+    width: 100%;
+    height: auto;
+  }
+
+  .app {
+    padding-top: 80px;
+    padding-right: 117px;
+    padding-left: 117px;
+    gap: 12px;
+  }
+
+  .app__visual {
+    width: 904px;
+    height: 678px;
+  }
+
+  .app__image {
+    width: 904px;
+    height: 678px;
+  }
 }
 
 @media screen and (min-width: 834px) and (max-width: 1193px) {
