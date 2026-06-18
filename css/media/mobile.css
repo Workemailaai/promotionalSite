@@ -1,5 +1,5 @@
-@media screen and (max-width: 375px), screen and (min-width: 376px) and (max-width: 833px) {
-  /* Стили для мобильных: до 833px */
+@media screen and (max-width: 833px) {
+  /* Стили для мобильных: до 833px (макет 412px, контент 360px) */
 
   body {
     min-width: 0;
@@ -7,55 +7,378 @@
 
   .page {
     width: 100%;
-    max-width: 100%;
+    max-width: 412px;
+    margin-right: auto;
+    margin-left: auto;
   }
 
-  #advantages {
-    padding-right: 24px;
-    padding-left: 24px;
+  .header,
+  .section,
+  .solution,
+  .app,
+  .footer {
+    padding-right: 26px;
+    padding-left: 26px;
   }
 
-  .advantages__wrap {
-    min-width: 0;
-    max-width: 100%;
+  .section {
+    padding-top: 48px;
+    padding-bottom: 48px;
   }
 
-  .advantages__viewport {
+  .header {
+    height: 56px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    gap: 16px;
+  }
+
+  .header__nav,
+  .header__button,
+  .footer__nav {
+    display: none;
+  }
+
+  .header__logo {
+    flex: 1 1 0;
+    width: auto;
+    font-size: 20px;
+    line-height: 20px;
+    font-weight: 600;
+  }
+
+  .footer {
+    height: 56px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    gap: 20px;
+  }
+
+  .footer__logo {
+    flex: 1 1 0;
+    width: auto;
+    font-size: 20px;
+    line-height: 20px;
+    font-weight: 600;
+  }
+
+  .footer__copy {
+    width: auto;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .section__layout {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .section__label {
+    flex: none;
+    width: auto;
+    font-size: 20px;
+    line-height: 22px;
+  }
+
+  .problem .section__label {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .section__content {
+    flex: none;
     width: 100%;
-    max-width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
+    gap: 32px;
   }
 
-  .advantages__viewport::-webkit-scrollbar {
+  .section__head {
+    gap: 12px;
+  }
+
+  .section__center {
+    gap: 20px;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .section__title,
+  .solution__title,
+  .app__title {
+    font-size: 36px;
+    line-height: 36px;
+    letter-spacing: 0;
+  }
+
+  .section__text,
+  .solution__text {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .section__center .section__text,
+  .problem .section__text,
+  .process .section__text,
+  .prices .section__text,
+  .advantages .section__text {
+    max-width: none;
+  }
+
+  .hero {
+    height: 1100px;
+    padding: 48px 26px;
+  }
+
+  .hero__inner {
+    width: 360px;
+    height: 1004px;
+    margin-right: auto;
+    margin-left: auto;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .hero__content {
+    align-self: stretch;
+    width: 100%;
+    gap: 12px;
+    position: relative;
+    z-index: 5;
+  }
+
+  .hero__subtitle {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .hero__title {
+    font-size: 36px;
+    line-height: 36px;
+    max-width: none;
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .hero__media {
+    display: block;
+    top: 305px;
+    left: 0;
+    width: 360px;
+    height: 515px;
+    z-index: 2;
+    overflow: visible;
+  }
+
+  .hero__media::after {
     display: none;
   }
 
-  .advantages__grid {
+  .hero__phone {
+    width: auto;
+    height: auto;
+  }
+
+  .hero__phone--center {
+    width: 255px;
+    height: 515px;
+    top: 0;
+    left: 52px;
+    z-index: 3;
+  }
+
+  .hero__phone--left {
+    width: 194px;
+    height: 392px;
+    top: 62px;
+    left: -44px;
+    z-index: 1;
+  }
+
+  .hero__phone--right {
+    width: 194px;
+    height: 392px;
+    top: 62px;
+    left: 209px;
+    z-index: 2;
+  }
+
+  .hero__list {
+    position: static;
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    pointer-events: auto;
+    z-index: 5;
+  }
+
+  .hero__item {
+    position: static;
+    padding: 8px 12px;
+    gap: 4px;
+    font-size: 14px;
+    line-height: 18px;
+    white-space: normal;
+  }
+
+  .hero__item:nth-child(1) {
+    order: 3;
+  }
+
+  .hero__item:nth-child(2) {
+    order: 2;
+  }
+
+  .hero__item:nth-child(3) {
+    order: 1;
+  }
+
+  .hero__item::before {
+    width: 16px;
+    height: 16px;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+    width: 100%;
+    position: relative;
+    z-index: 6;
+    margin-top: auto;
+    gap: 8px;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .hero__actions .button--primary,
+  .hero__actions .button--secondary {
+    align-self: stretch;
+    width: 100%;
+    flex: none;
+    min-width: 0;
+    height: 56px;
+    padding: 12px 32px;
+    font-size: 18px;
+    line-height: 18px;
+    font-weight: 500;
+  }
+
+  .problem__card {
+    padding-top: 16px;
+    padding-right: 0;
+    padding-bottom: 16px;
+  }
+
+  .problem__title,
+  .problem__number {
+    font-size: 20px;
+    line-height: 22px;
+  }
+
+  .problem__text {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .solution {
+    height: auto;
+    min-height: 402px;
+    padding-top: 48px;
+    padding-bottom: 48px;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .solution__content {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .solution__label {
+    font-size: 20px;
+    line-height: 22px;
+  }
+
+  .solution__title {
+    text-align: left;
+  }
+
+  .solution__text {
+    text-align: left;
+  }
+
+  #process .section__layout {
+    width: 100%;
+    gap: 20px;
+  }
+
+  #process .section__content {
+    gap: 32px;
+  }
+
+  .process__grid {
+    display: flex;
+    flex-direction: column;
     flex-wrap: nowrap;
-    width: max-content;
-    transition: none;
-    will-change: auto;
+    gap: 0;
+    width: 100%;
+    align-self: stretch;
   }
 
-  .advantages__card {
-    flex-shrink: 0;
-    scroll-snap-align: start;
+  .process__card {
+    width: 100%;
+    height: 106px;
+    padding: 16px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 12px;
+    overflow: hidden;
+    border-top: 1px solid rgba(34, 38, 49, 0.8);
+    background: #ffffff;
   }
 
-  .advantages__controls {
-    display: none;
+  .process__heading {
+    align-self: stretch;
+    gap: 16px;
+  }
+
+  .process__title,
+  .process__number {
+    font-size: 20px;
+    line-height: 22px;
+  }
+
+  .process__text {
+    align-self: stretch;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .cases {
+    gap: 32px;
+    align-items: stretch;
+    padding-right: 0;
+  }
+
+  .cases .section__center {
+    padding-right: 26px;
   }
 
   .cases__carousel {
+    align-self: stretch;
     width: 100%;
-    padding-right: 24px;
-    padding-left: 24px;
+    padding-right: 0;
+    padding-left: 0;
     box-sizing: border-box;
+    gap: 8px;
   }
 
   .cases__stack {
@@ -65,9 +388,11 @@
     height: auto;
     position: static;
     overflow-x: auto;
+    overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
+    touch-action: pan-x;
   }
 
   .cases__stack::-webkit-scrollbar {
@@ -83,15 +408,47 @@
     position: relative;
     top: auto;
     left: auto;
-    flex: 0 0 min(320px, 85vw);
-    width: min(320px, 85vw);
-    height: 360px;
+    flex: 0 0 266px;
+    width: 266px;
+    height: 266px;
+    padding: 20px;
     transform: none;
     opacity: 1;
     transition: none;
     will-change: auto;
     scroll-snap-align: center;
     pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: none;
+  }
+
+  .cases__preview {
+    display: none;
+  }
+
+  .cases__body {
+    flex: none;
+    align-self: stretch;
+    padding: 0;
+    gap: 8px;
+  }
+
+  .cases__title {
+    font-size: 20px;
+    line-height: 22px;
+    text-align: center;
+  }
+
+  .cases__text {
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
   }
 
   .cases__arrow {
@@ -99,7 +456,405 @@
   }
 
   .cases__controls {
-    width: auto;
+    width: 240px;
     justify-content: center;
+  }
+
+  .cases__dot {
+    cursor: pointer;
+  }
+
+  #advantages {
+    padding-top: 48px;
+    padding-bottom: 48px;
+    padding-left: 26px;
+  }
+
+  #advantages .section__layout {
+    width: 100%;
+    min-width: 0;
+    gap: 20px;
+  }
+
+  #advantages .section__content {
+    flex: none;
+    width: 100%;
+    min-width: 0;
+    gap: 32px;
+  }
+
+  .advantages .section__head {
+    max-width: none;
+    gap: 12px;
+  }
+
+  .advantages__wrap {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .advantages__viewport {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    touch-action: pan-x;
+  }
+
+  .advantages__viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .advantages__grid {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    width: max-content;
+    gap: 16px;
+    transition: none;
+    will-change: auto;
+    transform: none;
+  }
+
+  .advantages__card {
+    flex-shrink: 0;
+    width: 266px;
+    height: 266px;
+    min-height: 266px;
+    padding: 20px;
+    scroll-snap-align: start;
+  }
+
+  .advantages__icon {
+    width: 40px;
+    height: 40px;
+    padding: 12px;
+  }
+
+  .advantages__icon::before {
+    width: 16px;
+    height: 16px;
+  }
+
+  .advantages__card-body {
+    gap: 8px;
+  }
+
+  .advantages__title {
+    font-size: 20px;
+    line-height: 22px;
+  }
+
+  .advantages__text {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .advantages__controls {
+    display: none;
+  }
+
+  .prices {
+    align-items: stretch;
+    gap: 32px;
+  }
+
+  .prices .section__center {
+    align-items: flex-start;
+    text-align: left;
+    gap: 20px;
+  }
+
+  .prices__grid {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .price-card {
+    flex: none;
+    align-self: stretch;
+    width: 100%;
+    padding: 20px;
+    gap: 32px;
+    border-radius: 20px;
+  }
+
+  .price-card__inner {
+    align-self: stretch;
+    width: 100%;
+    gap: 16px;
+  }
+
+  .price-card__top {
+    align-self: flex-start;
+    width: fit-content;
+    max-width: 100%;
+    height: 36px;
+    box-sizing: border-box;
+    padding: 2px;
+    display: inline-flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 2px;
+    border-radius: 66px;
+    background: #f0f1f5;
+  }
+
+  .price-card--accent .price-card__top {
+    background: #0a0f15;
+  }
+
+  .price-card__badge {
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    padding: 8px 16px;
+    border-radius: 48px;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 400;
+    white-space: nowrap;
+    flex: 0 0 auto;
+    background: #222631;
+    color: #ffffff;
+  }
+
+  .price-card--accent .price-card__badge {
+    background: #00a99d;
+  }
+
+  .price-card__events {
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 0;
+    padding: 8px 16px;
+    border-radius: 48px;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 400;
+    white-space: nowrap;
+    opacity: 0.8;
+    color: rgba(34, 38, 49, 0.8);
+  }
+
+  .price-card--accent .price-card__events {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .price-card__content {
+    align-self: stretch;
+    gap: 8px;
+  }
+
+  .price-card__title {
+    font-size: 24px;
+    line-height: 24px;
+  }
+
+  .price-card__text {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .price-card__list {
+    align-self: stretch;
+    gap: 8px;
+  }
+
+  .price-card__list li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-left: 0;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .price-card__list li::before {
+    position: static;
+    flex: 0 0 16px;
+    width: 16px;
+    height: 16px;
+    background-color: #00a99d;
+  }
+
+  .price-card--accent .price-card__list li::before {
+    background-color: #00a99d;
+  }
+
+  .price-card__button,
+  .price-card .button--dark,
+  .price-card .button--light {
+    align-self: stretch;
+    width: 100%;
+    height: 56px;
+    margin-top: 0;
+  }
+
+  .reviews {
+    gap: 32px;
+    align-items: center;
+  }
+
+  .reviews__grid {
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    gap: 12px;
+  }
+
+  .review-card {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .review-card__top {
+    gap: 12px;
+  }
+
+  .review-card__stars {
+    gap: 4px;
+  }
+
+  .review-card__star {
+    width: 16px;
+    height: 16px;
+  }
+
+  .review-card__text {
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+  }
+
+  .review-card__bottom {
+    gap: 12px;
+  }
+
+  .review-card__divider {
+    align-self: stretch;
+    height: 1px;
+    background: rgba(34, 38, 49, 0.15);
+  }
+
+  .review-card__author {
+    gap: 8px;
+  }
+
+  .review-card__image {
+    width: 40px;
+    height: 40px;
+  }
+
+  .review-card__name {
+    gap: 2px;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .review-card__role {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .app {
+    padding-top: 48px;
+    padding-right: 26px;
+    padding-bottom: 0;
+    padding-left: 26px;
+    gap: 20px;
+    align-items: center;
+    text-align: left;
+  }
+
+  .app__label {
+    align-self: stretch;
+    text-align: left;
+    font-size: 20px;
+    line-height: 22px;
+  }
+
+  .app__content {
+    align-self: stretch;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .app__title {
+    text-align: left;
+  }
+
+  .app__content .button {
+    align-self: stretch;
+    width: 100%;
+    height: 56px;
+  }
+
+  .app__visual {
+    width: 378px;
+    height: 283px;
+  }
+
+  .app__image {
+    width: 378px;
+    height: 283px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  /* Адаптив для 375px, на всякий для ТЗ запасной вариант*/
+
+  .page {
+    max-width: 375px;
+  }
+
+  .header,
+  .section,
+  .solution,
+  .app,
+  .footer {
+    padding-right: 7.5px;
+    padding-left: 7.5px;
+  }
+
+  .hero {
+    padding-right: 7.5px;
+    padding-left: 7.5px;
+  }
+
+  .cases .section__center {
+    padding-right: 7.5px;
+  }
+
+  #advantages {
+    padding-left: 7.5px;
+  }
+
+  .app {
+    padding-right: 7.5px;
+    padding-left: 7.5px;
+  }
+
+  .app__visual,
+  .app__image {
+    width: 360px;
+    height: 270px;
   }
 }
