@@ -53,15 +53,22 @@
   .hero__media {
     width: 1600px;
     height: 820px;
-    top: 0;
+    top: -116px;
     left: -80px;
   }
 
   .hero__media::after {
-    top: 644px;
+    top: 500px;
     right: 0;
-    bottom: -160px;
+    bottom: -80px;
     left: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0) 50%,
+      rgba(255, 255, 255, 0.7) 80%,
+      rgba(255, 255, 255, 1) 100%
+    );
   }
 
   .hero__phone--left {
@@ -86,17 +93,17 @@
   }
 
   .hero__item:nth-child(1) {
-    top: 289px;
+    top: 176px;
     left: 767px;
   }
 
   .hero__item:nth-child(2) {
-    top: 449px;
+    top: 336px;
     left: 120px;
   }
 
   .hero__item:nth-child(3) {
-    top: 499px;
+    top: 386px;
     left: 1077px;
   }
 
