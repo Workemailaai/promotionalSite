@@ -35,3 +35,60 @@ main {
   margin: 0 auto;
   overflow: hidden;
 }
+
+/* Анимация hero: подзаголовок, заголовок и 3 плашки */
+@keyframes promo-appear-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(2.222vh);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Общие настройки анимации для элементов hero */
+.hero__subtitle,
+.hero__title,
+.hero__item {
+  opacity: 0;
+  animation: promo-appear-fade-up 0.556s ease-out forwards;
+}
+
+/* Анимация 1: подзаголовок hero */
+.hero__subtitle {
+  animation-delay: 0.111s;
+}
+
+/* Анимация 2: заголовок hero */
+.hero__title {
+  animation-delay: 0.333s;
+}
+
+/* Анимация 3: плашка «Итоги за несколько минут» */
+.hero__item:nth-child(1) {
+  animation-delay: 0.667s;
+}
+
+/* Анимация 4: плашка «Настраиваемые критерии и веса» */
+.hero__item:nth-child(2) {
+  animation-delay: 0.889s;
+}
+
+/* Анимация 5: плашка «Подробные отчеты» */
+.hero__item:nth-child(3) {
+  animation-delay: 1.111s;
+}
+
+/* Отключение анимаций при системной настройке «уменьшить движение» */
+@media (prefers-reduced-motion: reduce) {
+  .hero__subtitle,
+  .hero__title,
+  .hero__item {
+    opacity: 1;
+    animation: none;
+    transform: none;
+  }
+}

@@ -223,16 +223,20 @@
     white-space: normal;
   }
 
+  /* Плашки hero: задержки по визуальному порядку сверху вниз (order меняет раскладку) */
   .hero__item:nth-child(1) {
     order: 3;
+    animation-delay: 1.111s;
   }
 
   .hero__item:nth-child(2) {
     order: 2;
+    animation-delay: 0.889s;
   }
 
   .hero__item:nth-child(3) {
     order: 1;
+    animation-delay: 0.667s;
   }
 
   .hero__item::before {
