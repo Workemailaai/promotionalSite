@@ -1169,6 +1169,12 @@
   gap: 32px;
 }
 
+.app__content .button {
+  align-self: center;
+  width: 274px;
+  height: 56px;
+}
+
 .app__title {
   align-self: stretch;
   color: #ffffff;

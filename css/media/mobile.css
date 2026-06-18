@@ -811,7 +811,7 @@
 
   .app__content .button {
     align-self: center;
-    width: auto;
+    width: 360px;
     height: 56px;
   }
 
