@@ -7,6 +7,10 @@
   .page {
     width: 1920px;
   }
+
+  .hero__crown-badge {
+    animation: promo-crown-shake-soft 2.5s linear 2.889s infinite;
+  }
 }
 
 .header,
@@ -382,10 +386,11 @@
   z-index: 1;
 }
 
-.hero__phone--center {
+.hero__phone-slot--center {
   top: 269px;
   left: 625px;
-  z-index: 3;
+  width: 350px;
+  height: 707px;
 }
 
 .hero__phone--right {

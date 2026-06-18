@@ -76,9 +76,11 @@
     left: 266px;
   }
 
-  .hero__phone--center {
+  .hero__phone-slot--center {
     top: 269px;
     left: 545px;
+    width: 350px;
+    height: 707px;
   }
 
   .hero__phone--right {
@@ -194,5 +196,9 @@
 
   .footer {
     gap: 12px;
+  }
+
+  .hero__crown-badge {
+    animation: promo-crown-shake-soft 2.5s linear 2.889s infinite;
   }
 }

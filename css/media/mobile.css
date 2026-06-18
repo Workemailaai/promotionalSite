@@ -177,12 +177,11 @@
     height: auto;
   }
 
-  .hero__phone--center {
+  .hero__phone-slot--center {
     width: 255px;
     height: 515px;
     top: 0;
     left: 52px;
-    z-index: 3;
   }
 
   .hero__phone--left {
@@ -191,6 +190,8 @@
     top: 62px;
     left: -44px;
     z-index: 1;
+    --promo-phone-stack-x: 49%;
+    --promo-phone-stack-y: -16%;
   }
 
   .hero__phone--right {
@@ -199,6 +200,8 @@
     top: 62px;
     left: 209px;
     z-index: 2;
+    --promo-phone-stack-x: -81%;
+    --promo-phone-stack-y: -16%;
   }
 
   .hero__list {
@@ -226,17 +229,17 @@
   /* Плашки hero: задержки по визуальному порядку сверху вниз (order меняет раскладку) */
   .hero__item:nth-child(1) {
     order: 3;
-    animation-delay: 1.111s;
+    animation-delay: 2.111s;
   }
 
   .hero__item:nth-child(2) {
     order: 2;
-    animation-delay: 0.889s;
+    animation-delay: 1.889s;
   }
 
   .hero__item:nth-child(3) {
     order: 1;
-    animation-delay: 0.667s;
+    animation-delay: 1.667s;
   }
 
   .hero__item::before {
