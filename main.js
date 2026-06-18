@@ -23,6 +23,9 @@ const isTouchScrollMode = () => window.matchMedia(`(max-width: ${TOUCH_SCROLL_MA
 // Функция очистки карусели «Преимущества»
 let destroyAdvantagesCarousel = null;
 
+// Функция очистки горизонтального скролла «Преимущества»
+let destroyAdvantagesTouchScroll = null;
+
 // Функция очистки колоды «Сценарии»
 let destroyCasesDeck = null;
 
@@ -286,14 +289,117 @@ const createCasesDeck = () => {
     animateDeckStep(1);
   };
 
+  // Стартовая координата touch для свайпа по колоде
+  let touchStartX = 0;
+
+  // Стартовая координата pointer для свайпа мышью
+  let pointerStartX = 0;
+
+  // Флаг активного pointer-свайпа
+  let isPointerActive = false;
+
+  // Обработчик начала touch-свайпа
+  const onTouchStart = (event) => {
+    if (!event.touches[0]) {
+      return;
+    }
+
+    touchStartX = event.touches[0].clientX;
+  };
+
+  // Обработчик завершения touch-свайпа
+  const onTouchEnd = (event) => {
+    if (!event.changedTouches[0]) {
+      return;
+    }
+
+    const touchDelta = event.changedTouches[0].clientX - touchStartX;
+
+    if (Math.abs(touchDelta) < 50) {
+      return;
+    }
+
+    animateDeckStep(touchDelta < 0 ? 1 : -1);
+  };
+
+  // Направление шага колоды к выбранному слайду
+  const getDirectionToSlide = (targetIndex) => {
+    const activeIndex = stackOrder[stackOrder.length - 1];
+
+    if (targetIndex === activeIndex) {
+      return 0;
+    }
+
+    const forwardSteps = (targetIndex - activeIndex + cards.length) % cards.length;
+    const backwardSteps = (activeIndex - targetIndex + cards.length) % cards.length;
+
+    return forwardSteps <= backwardSteps ? 1 : -1;
+  };
+
+  // Обработчик клика по точке пагинации
+  const onDotClick = (event) => {
+    const dotIndex = [...dots].indexOf(event.currentTarget);
+    const direction = getDirectionToSlide(dotIndex);
+
+    if (direction === 0 || isAnimating) {
+      return;
+    }
+
+    animateDeckStep(direction);
+  };
+
+  // Обработчик начала pointer-свайпа
+  const onPointerDown = (event) => {
+    if (isAnimating || event.pointerType === 'touch') {
+      return;
+    }
+
+    isPointerActive = true;
+    pointerStartX = event.clientX;
+    stack.setPointerCapture(event.pointerId);
+  };
+
+  // Обработчик завершения pointer-свайпа
+  const onPointerUp = (event) => {
+    if (!isPointerActive || event.pointerType === 'touch') {
+      return;
+    }
+
+    isPointerActive = false;
+
+    const pointerDelta = event.clientX - pointerStartX;
+
+    if (Math.abs(pointerDelta) < 50) {
+      return;
+    }
+
+    animateDeckStep(pointerDelta < 0 ? 1 : -1);
+  };
+
   prevButton.addEventListener('click', onPrevClick);
   nextButton.addEventListener('click', onNextClick);
+  stack.addEventListener('touchstart', onTouchStart, { passive: true });
+  stack.addEventListener('touchend', onTouchEnd, { passive: true });
+  stack.addEventListener('pointerdown', onPointerDown);
+  stack.addEventListener('pointerup', onPointerUp);
+  stack.addEventListener('pointercancel', onPointerUp);
+  dots.forEach((dot) => {
+    dot.addEventListener('click', onDotClick);
+  });
   applyStackPositions();
   updateDots();
 
   return () => {
     prevButton.removeEventListener('click', onPrevClick);
     nextButton.removeEventListener('click', onNextClick);
+    stack.removeEventListener('touchstart', onTouchStart);
+    stack.removeEventListener('touchend', onTouchEnd);
+    stack.removeEventListener('pointerdown', onPointerDown);
+    stack.removeEventListener('pointerup', onPointerUp);
+    stack.removeEventListener('pointercancel', onPointerUp);
+    dots.forEach((dot) => {
+      dot.removeEventListener('click', onDotClick);
+    });
     cards.forEach((card) => {
       resetCasesCardState(card);
     });
@@ -301,6 +407,36 @@ const createCasesDeck = () => {
       dot.classList.remove('cases__dot--active');
     });
     isAnimating = false;
+  };
+};
+
+// Горизонтальный скролл ленты «Преимущества» колесом и свайпом
+const createAdvantagesTouchScroll = () => {
+  // Контейнер с overflow-x для прокрутки карточек
+  const viewport = document.querySelector('.advantages__viewport');
+
+  if (!viewport) {
+    return null;
+  }
+
+  // Обработчик колеса: вертикальный жест прокручивает ленту по горизонтали
+  const onWheel = (event) => {
+    if (viewport.scrollWidth <= viewport.clientWidth) {
+      return;
+    }
+
+    if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) {
+      return;
+    }
+
+    viewport.scrollLeft += event.deltaY;
+    event.preventDefault();
+  };
+
+  viewport.addEventListener('wheel', onWheel, { passive: false });
+
+  return () => {
+    viewport.removeEventListener('wheel', onWheel);
   };
 };
 
@@ -319,7 +455,16 @@ const setupAdvantagesCarousel = () => {
       track.style.transform = '';
     }
 
+    if (!destroyAdvantagesTouchScroll) {
+      destroyAdvantagesTouchScroll = createAdvantagesTouchScroll();
+    }
+
     return;
+  }
+
+  if (destroyAdvantagesTouchScroll) {
+    destroyAdvantagesTouchScroll();
+    destroyAdvantagesTouchScroll = null;
   }
 
   if (!destroyAdvantagesCarousel) {
@@ -375,13 +520,53 @@ const createCasesScrollDots = () => {
     });
   };
 
+  // Прокрутка к карточке по клику на точку
+  const onDotClick = (event) => {
+    const dotIndex = [...dots].indexOf(event.currentTarget);
+    const targetCard = cards[dotIndex];
+
+    if (!targetCard) {
+      return;
+    }
+
+    targetCard.scrollIntoView({
+      behavior: 'smooth',
+      inline: 'center',
+      block: 'nearest',
+    });
+  };
+
+  dots.forEach((dot) => {
+    dot.addEventListener('click', onDotClick);
+  });
+
   stack.addEventListener('scroll', updateActiveDot, { passive: true });
   window.addEventListener('resize', updateActiveDot);
+
+  // Обработчик колеса: вертикальный жест прокручивает ленту по горизонтали
+  const onWheel = (event) => {
+    if (stack.scrollWidth <= stack.clientWidth) {
+      return;
+    }
+
+    if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) {
+      return;
+    }
+
+    stack.scrollLeft += event.deltaY;
+    event.preventDefault();
+  };
+
+  stack.addEventListener('wheel', onWheel, { passive: false });
   updateActiveDot();
 
   return () => {
     stack.removeEventListener('scroll', updateActiveDot);
     window.removeEventListener('resize', updateActiveDot);
+    stack.removeEventListener('wheel', onWheel);
+    dots.forEach((dot) => {
+      dot.removeEventListener('click', onDotClick);
+    });
     dots.forEach((dot) => {
       dot.classList.remove('cases__dot--active');
     });
@@ -391,6 +576,9 @@ const createCasesScrollDots = () => {
     }
   };
 };
+
+// Проверка режима touch-scroll для блока «Сценарии»
+const isCasesTouchScrollMode = () => window.matchMedia('(max-width: 1439px)').matches;
 
 // Определение брейкпоинта колоды «Сценарии» по ширине экрана
 const getCasesDeckBreakpoint = () => {
@@ -406,7 +594,7 @@ const setupCasesDeck = () => {
   // Контейнер стопки для сброса состояния карточек
   const stack = document.querySelector('.cases__stack');
 
-  if (isTouchScrollMode()) {
+  if (isCasesTouchScrollMode()) {
     casesDeckBreakpoint = '';
 
     if (destroyCasesDeck) {
