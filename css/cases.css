@@ -3,7 +3,6 @@
   flex-direction: column;
   align-items: center;
   gap: 64px;
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.5) 100%), #f0f1f5;
 }
 
 .cases__carousel {
@@ -137,31 +136,11 @@
 }
 
 .cases__arrow {
-  width: 48px;
-  height: 48px;
-  padding: 12px;
-  box-sizing: border-box;
-  border: 0;
-  border-radius: 40px;
-  position: relative;
   background-color: #ffffff;
-  cursor: pointer;
 }
 
 .cases__arrow::after {
-  content: "";
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  bottom: 12px;
-  left: 12px;
   background-color: #222631;
-  mask: url("../icons/line_arrow.svg") center / contain no-repeat;
-  -webkit-mask: url("../icons/line_arrow.svg") center / contain no-repeat;
-}
-
-.cases__arrow--next::after {
-  transform: rotate(180deg);
 }
 
 .cases__dots {

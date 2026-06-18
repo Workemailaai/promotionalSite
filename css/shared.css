@@ -166,3 +166,67 @@
   background: #ffffff;
   color: #222631;
 }
+
+.solution__overlay,
+.advantages__overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(0deg, rgba(2, 7, 12, 0.5) 0%, rgba(2, 7, 12, 0.5) 100%),
+    url("../images/background.png") center / cover no-repeat,
+    rgba(2, 7, 12, 0.35);
+  backdrop-filter: blur(2px);
+  pointer-events: none;
+}
+
+.solution,
+.advantages {
+  background:
+    linear-gradient(0deg, rgba(10, 15, 21, 0.5) 0%, rgba(10, 15, 21, 0.5) 100%),
+    #00a99d;
+}
+
+.cases,
+.prices,
+.hero__item,
+.review-card {
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.5) 100%), #f0f1f5;
+}
+
+.cases__arrow,
+.advantages__arrow {
+  width: 48px;
+  height: 48px;
+  padding: 12px;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 40px;
+  position: relative;
+  cursor: pointer;
+}
+
+.cases__arrow::after,
+.advantages__arrow::after {
+  content: "";
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  bottom: 12px;
+  left: 12px;
+  mask: url("../icons/line_arrow.svg") center / contain no-repeat;
+  -webkit-mask: url("../icons/line_arrow.svg") center / contain no-repeat;
+}
+
+.cases__arrow--next::after,
+.advantages__arrow--next::after {
+  transform: rotate(180deg);
+}
+
+.hero__item::before,
+.price-card__list li::before {
+  width: 24px;
+  height: 24px;
+  content: "";
+  mask: url("../icons/tick.svg") center / contain no-repeat;
+  -webkit-mask: url("../icons/tick.svg") center / contain no-repeat;
+}

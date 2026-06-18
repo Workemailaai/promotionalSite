@@ -21,7 +21,6 @@
   justify-content: space-between;
   overflow: hidden;
   border-radius: 20px;
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.5) 100%), #f0f1f5;
   box-shadow: 0 0 80px rgba(255, 255, 255, 0.1) inset;
 }
 

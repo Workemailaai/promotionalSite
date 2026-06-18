@@ -1,0 +1,92 @@
+/* Брейкпоинт синхронизирован с TOUCH_SCROLL_MAX_WIDTH в main.js */
+@media (max-width: 1193px) {
+  body {
+    min-width: 0;
+  }
+
+  .page {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  #advantages {
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+
+  .advantages__viewport {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .advantages__viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .advantages__grid {
+    transition: none;
+    will-change: auto;
+  }
+
+  .advantages__card {
+    scroll-snap-align: start;
+  }
+
+  .advantages__controls {
+    display: none;
+  }
+
+  .cases__carousel {
+    width: 100%;
+    padding-right: 24px;
+    padding-left: 24px;
+    box-sizing: border-box;
+  }
+
+  .cases__stack {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+    height: auto;
+    position: static;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .cases__stack::-webkit-scrollbar {
+    display: none;
+  }
+
+  .cases__card,
+  .cases__card--top,
+  .cases__card--middle,
+  .cases__card--back,
+  .cases__card--exit-down,
+  .cases__card--exit-up {
+    position: relative;
+    top: auto;
+    left: auto;
+    flex: 0 0 min(320px, 85vw);
+    width: min(320px, 85vw);
+    height: 360px;
+    transform: none;
+    opacity: 1;
+    transition: none;
+    will-change: auto;
+    scroll-snap-align: center;
+    pointer-events: auto;
+  }
+
+  .cases__arrow {
+    display: none;
+  }
+
+  .cases__controls {
+    width: auto;
+    justify-content: center;
+  }
+}

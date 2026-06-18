@@ -1,20 +1,6 @@
 .advantages {
   position: relative;
   overflow: hidden;
-  background:
-    linear-gradient(0deg, rgba(10, 15, 21, 0.5) 0%, rgba(10, 15, 21, 0.5) 100%),
-    #00a99d;
-}
-
-.advantages__overlay {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(0deg, rgba(2, 7, 12, 0.5) 0%, rgba(2, 7, 12, 0.5) 100%),
-    url("../images/background.png") center / cover no-repeat,
-    rgba(2, 7, 12, 0.35);
-  backdrop-filter: blur(2px);
-  pointer-events: none;
 }
 
 .advantages > .section__layout {
@@ -138,32 +124,12 @@
 }
 
 .advantages__arrow {
-  width: 48px;
-  height: 48px;
-  padding: 12px;
-  box-sizing: border-box;
-  border: 0;
-  border-radius: 40px;
-  position: relative;
   background-color: rgba(255, 255, 255, 0.05);
   box-shadow: 0 0 80px rgba(255, 255, 255, 0.1) inset;
-  cursor: pointer;
 }
 
 .advantages__arrow::after {
-  content: "";
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  bottom: 12px;
-  left: 12px;
   background-color: #ffffff;
-  mask: url("../icons/line_arrow.svg") center / contain no-repeat;
-  -webkit-mask: url("../icons/line_arrow.svg") center / contain no-repeat;
-}
-
-.advantages__arrow--next::after {
-  transform: rotate(180deg);
 }
 
 .advantages__arrow--disabled {
