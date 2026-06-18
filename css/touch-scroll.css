@@ -1,4 +1,3 @@
-/* Брейкпоинт синхронизирован с TOUCH_SCROLL_MAX_WIDTH в main.js */
 @media (max-width: 1193px) {
   body {
     min-width: 0;
