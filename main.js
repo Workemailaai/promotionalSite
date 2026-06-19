@@ -1,6 +1,3 @@
-// Порог touch-scroll — планшет и мобилка без кнопок карусели
-const TOUCH_SCROLL_MAX_WIDTH = 1439;
-
 // Классы позиционирования колоды «Сценарии»
 const CASES_CARD_STATE_CLASSES = [
   'cases__card--top',
@@ -16,9 +13,6 @@ const resetCasesCardState = (card) => {
   card.classList.remove(...CASES_CARD_STATE_CLASSES);
   card.removeAttribute('aria-hidden');
 };
-
-// Проверка режима touch-scroll вместо карусели/колоды
-const isTouchScrollMode = () => window.matchMedia(`(max-width: ${TOUCH_SCROLL_MAX_WIDTH}px)`).matches;
 
 // Функция очистки карусели «Преимущества»
 let destroyAdvantagesCarousel = null;
@@ -189,14 +183,74 @@ const createAdvantagesCarousel = () => {
     event.preventDefault();
   };
 
-  // Пауза автопрокрутки при касании ленты
-  const onTouchStart = () => {
+  // Стартовая X-координата touch
+  let touchStartX = 0;
+
+  // Стартовая Y-координата touch
+  let touchStartY = 0;
+
+  // Смещение ленты на момент начала touch
+  let touchStartOffset = 0;
+
+  // Флаг активного горизонтального перетаскивания
+  let isTouchDragging = false;
+
+  // Обработчик начала touch — фиксируем стартовые координаты
+  const onTouchStart = (event) => {
+    if (!event.touches[0]) {
+      return;
+    }
+
     pauseAutoScroll();
+    touchStartX = event.touches[0].clientX;
+    touchStartY = event.touches[0].clientY;
+    touchStartOffset = currentOffset;
+    isTouchDragging = false;
+  };
+
+  // Обработчик движения touch — перетаскивание ленты по горизонтали
+  const onTouchMove = (event) => {
+    if (!event.touches[0]) {
+      return;
+    }
+
+    const currentX = event.touches[0].clientX;
+    const currentY = event.touches[0].clientY;
+    const deltaX = touchStartX - currentX;
+    const deltaY = touchStartY - currentY;
+
+    if (!isTouchDragging) {
+      if (Math.abs(deltaX) < 5 && Math.abs(deltaY) < 5) {
+        return;
+      }
+
+      if (Math.abs(deltaY) > Math.abs(deltaX)) {
+        return;
+      }
+
+      isTouchDragging = true;
+    }
+
+    currentOffset = touchStartOffset + deltaX;
+    applyOffset(false);
+    event.preventDefault();
+  };
+
+  // Обработчик завершения touch — продлеваем паузу автопрокрутки
+  const onTouchEnd = () => {
+    if (isTouchDragging) {
+      pauseAutoScroll();
+    }
+
+    isTouchDragging = false;
   };
 
   prevButton.addEventListener('click', onPrevClick);
   nextButton.addEventListener('click', onNextClick);
   viewport.addEventListener('touchstart', onTouchStart, { passive: true });
+  viewport.addEventListener('touchmove', onTouchMove, { passive: false });
+  viewport.addEventListener('touchend', onTouchEnd, { passive: true });
+  viewport.addEventListener('touchcancel', onTouchEnd, { passive: true });
   viewport.addEventListener('wheel', onWheel, { passive: false });
 
   const onResize = () => {
@@ -216,6 +270,9 @@ const createAdvantagesCarousel = () => {
     prevButton.removeEventListener('click', onPrevClick);
     nextButton.removeEventListener('click', onNextClick);
     viewport.removeEventListener('touchstart', onTouchStart);
+    viewport.removeEventListener('touchmove', onTouchMove);
+    viewport.removeEventListener('touchend', onTouchEnd);
+    viewport.removeEventListener('touchcancel', onTouchEnd);
     viewport.removeEventListener('wheel', onWheel);
     window.removeEventListener('resize', onResize);
 

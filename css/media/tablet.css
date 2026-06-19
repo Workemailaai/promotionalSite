@@ -334,6 +334,7 @@
     width: 100%;
     max-width: 100%;
     overflow: hidden;
+    touch-action: pan-y;
   }
 
   .advantages__grid {
@@ -917,6 +918,7 @@
     width: 100%;
     min-width: 0;
     overflow: hidden;
+    touch-action: pan-y;
   }
 
   .advantages__grid {
