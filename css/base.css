@@ -39,11 +39,35 @@ main {
   overflow: hidden;
 }
 
+.header {
+  --promo-header-height: 81px;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+}
+
+.section,
+.solution,
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.hero__inner {
+  flex: 1 1 auto;
+  height: auto;
+  align-self: stretch;
+}
+
 /* Анимация hero: подзаголовок, заголовок, плашки, телефоны fan-out, кнопки */
 @keyframes promo-appear-fade-up {
   from {
     opacity: 0;
-    transform: translateY(2.222vh);
+    transform: translateY(20px);
   }
 
   to {
@@ -56,7 +80,7 @@ main {
 @keyframes promo-phone-fan-center {
   from {
     opacity: 0;
-    transform: translateY(3.333vh) scale(0.94);
+    transform: translateY(30px) scale(0.94);
   }
 
   to {
@@ -91,19 +115,19 @@ main {
   }
 
   64% {
-    transform: translateX(calc(-50% - 0.889vh)) rotate(-6deg);
+    transform: translateX(calc(-50% - 8px)) rotate(-6deg);
   }
 
   72% {
-    transform: translateX(calc(-50% + 0.889vh)) rotate(6deg);
+    transform: translateX(calc(-50% + 8px)) rotate(6deg);
   }
 
   80% {
-    transform: translateX(calc(-50% - 0.667vh)) rotate(-3deg);
+    transform: translateX(calc(-50% - 6px)) rotate(-3deg);
   }
 
   88% {
-    transform: translateX(calc(-50% + 0.667vh)) rotate(3deg);
+    transform: translateX(calc(-50% + 6px)) rotate(3deg);
   }
 
   94% {
@@ -120,19 +144,19 @@ main {
   }
 
   64% {
-    transform: translateX(calc(-50% - 0.444vh)) rotate(-3deg);
+    transform: translateX(calc(-50% - 4px)) rotate(-3deg);
   }
 
   72% {
-    transform: translateX(calc(-50% + 0.444vh)) rotate(3deg);
+    transform: translateX(calc(-50% + 4px)) rotate(3deg);
   }
 
   80% {
-    transform: translateX(calc(-50% - 0.333vh)) rotate(-1.5deg);
+    transform: translateX(calc(-50% - 3px)) rotate(-1.5deg);
   }
 
   88% {
-    transform: translateX(calc(-50% + 0.333vh)) rotate(1.5deg);
+    transform: translateX(calc(-50% + 3px)) rotate(1.5deg);
   }
 
   94% {

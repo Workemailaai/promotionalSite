@@ -25,6 +25,7 @@
   }
 
   .header {
+    --promo-header-height: 56px;
     height: 56px;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -121,16 +122,35 @@
     max-width: none;
   }
 
+  .section {
+    min-height: auto;
+    height: auto;
+    display: block;
+    justify-content: flex-start;
+  }
+
+  .app {
+    min-height: auto;
+    height: auto;
+    justify-content: flex-start;
+  }
+
   .hero {
+    min-height: auto;
     height: 1100px;
+    display: block;
     padding: 48px 26px;
   }
 
   .hero__inner {
     width: 360px;
     height: 1004px;
+    min-height: auto;
+    flex: none;
     margin-right: auto;
     margin-left: auto;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: flex-start;
   }
@@ -292,8 +312,8 @@
   }
 
   .solution {
-    height: auto;
     min-height: 402px;
+    height: auto;
     padding-top: 48px;
     padding-bottom: 48px;
     align-items: flex-start;
@@ -368,21 +388,18 @@
   }
 
   .cases {
-    gap: 32px;
+    display: flex;
+    flex-direction: column;
     align-items: stretch;
-    padding-right: 0;
-  }
-
-  .cases .section__center {
-    padding-right: 26px;
+    gap: 32px;
+    min-height: auto;
+    height: auto;
+    justify-content: flex-start;
   }
 
   .cases__carousel {
     align-self: stretch;
     width: 100%;
-    padding-right: 0;
-    padding-left: 0;
-    box-sizing: border-box;
     gap: 32px;
   }
 
@@ -396,8 +413,8 @@
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
-    scroll-padding-inline: calc((100% - 266px) / 2);
-    padding-inline: calc((100% - 266px) / 2);
+    scroll-padding-inline: 0;
+    padding-inline: 0;
     scrollbar-width: none;
     touch-action: pan-x;
   }
@@ -423,7 +440,7 @@
     opacity: 1;
     transition: none;
     will-change: auto;
-    scroll-snap-align: center;
+    scroll-snap-align: start;
     pointer-events: auto;
     display: flex;
     flex-direction: column;
@@ -463,6 +480,7 @@
   }
 
   .cases__controls {
+    align-self: center;
     width: 240px;
     justify-content: center;
   }
@@ -507,16 +525,7 @@
     width: 100%;
     min-width: 0;
     max-width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    touch-action: pan-x;
-  }
-
-  .advantages__viewport::-webkit-scrollbar {
-    display: none;
+    overflow: hidden;
   }
 
   .advantages__grid {
@@ -525,9 +534,7 @@
     align-items: stretch;
     width: max-content;
     gap: 16px;
-    transition: none;
-    will-change: auto;
-    transform: none;
+    will-change: transform;
   }
 
   .advantages__card {
@@ -536,7 +543,6 @@
     height: 266px;
     min-height: 266px;
     padding: 20px;
-    scroll-snap-align: start;
   }
 
   .advantages__icon {
@@ -569,6 +575,8 @@
   }
 
   .prices {
+    display: flex;
+    flex-direction: column;
     align-items: stretch;
     gap: 32px;
   }
@@ -714,6 +722,8 @@
   }
 
   .reviews {
+    display: flex;
+    flex-direction: column;
     gap: 32px;
     align-items: center;
   }
@@ -729,10 +739,11 @@
     width: 100%;
     height: auto;
     padding: 20px;
-    gap: 20px;
+    row-gap: 20px;
   }
 
   .review-card__top {
+    margin-bottom: 0;
     gap: 12px;
   }
 
@@ -753,13 +764,7 @@
   }
 
   .review-card__bottom {
-    gap: 12px;
-  }
-
-  .review-card__divider {
-    align-self: stretch;
-    height: 1px;
-    background: rgba(34, 38, 49, 0.15);
+    display: contents;
   }
 
   .review-card__author {
@@ -783,6 +788,8 @@
   }
 
   .app {
+    display: flex;
+    flex-direction: column;
     padding-top: 48px;
     padding-right: 26px;
     padding-bottom: 0;
@@ -816,13 +823,19 @@
   }
 
   .app__visual {
-    width: 378px;
-    height: 283px;
+    align-self: center;
+    width: 100%;
+    max-width: 378px;
+    height: auto;
+    margin-inline: auto;
   }
 
   .app__image {
-    width: 378px;
-    height: 283px;
+    display: block;
+    width: 100%;
+    max-width: 378px;
+    height: auto;
+    margin-inline: auto;
   }
 }
 
@@ -843,10 +856,6 @@
     padding-left: 7.5px;
   }
 
-  .cases .section__center {
-    padding-right: 7.5px;
-  }
-
   #advantages {
     padding-left: 7.5px;
   }
@@ -856,9 +865,11 @@
     padding-left: 7.5px;
   }
 
-  .app__visual,
+  .app__visual {
+    max-width: 360px;
+  }
+
   .app__image {
-    width: 360px;
-    height: 270px;
+    max-width: 360px;
   }
 }

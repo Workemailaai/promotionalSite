@@ -27,7 +27,7 @@
   }
 
   .hero {
-    height: 820px;
+    min-height: 900px;
     padding: 56px 80px;
   }
 
@@ -35,8 +35,18 @@
     --hero-media-center-x: 720px;
     width: 100%;
     max-width: 1280px;
-    height: 708px;
+    min-height: 780px;
     margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .section,
+  .solution,
+  .app {
+    min-height: 1080px;
   }
 
   .hero__title {
@@ -55,15 +65,15 @@
   }
 
   .hero__media::after {
-    top: 500px;
+    top: 560px;
     right: 0;
-    bottom: -80px;
+    bottom: -160px;
     left: 0;
     background: linear-gradient(
       180deg,
       rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0) 50%,
-      rgba(255, 255, 255, 0.7) 80%,
+      rgba(255, 255, 255, 0) 55%,
+      rgba(255, 255, 255, 0.7) 85%,
       rgba(255, 255, 255, 1) 100%
     );
   }
@@ -92,7 +102,7 @@
 
   .hero__list {
     width: 1440px;
-    height: 820px;
+    height: 100%;
     right: auto;
     left: calc(50% - var(--hero-media-center-x));
   }
@@ -132,13 +142,11 @@
   }
 
   .solution {
-    height: 900px;
     padding-top: 80px;
     padding-bottom: 80px;
   }
 
   .process {
-    height: 900px;
     padding-top: 80px;
     padding-bottom: 80px;
   }
@@ -152,7 +160,6 @@
   }
 
   .advantages {
-    height: 900px;
     padding-top: 80px;
     padding-bottom: 80px;
   }
@@ -173,6 +180,7 @@
 
   .reviews__grid {
     width: 100%;
+    align-items: stretch;
     gap: 12px;
   }
 
@@ -186,6 +194,10 @@
     padding-top: 80px;
     padding-right: 80px;
     padding-left: 80px;
+  }
+
+  .app__content .button {
+    margin-top: 40px;
   }
 
   .app__visual {
