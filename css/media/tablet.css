@@ -333,16 +333,23 @@
   .advantages__viewport {
     width: 100%;
     max-width: 100%;
-    overflow: hidden;
-    touch-action: pan-y;
+    overflow: visible;
   }
 
   .advantages__grid {
     display: flex;
     flex-wrap: nowrap;
-    width: max-content;
+    width: 100%;
     gap: 12px;
-    will-change: transform;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    touch-action: pan-x;
+  }
+
+  .advantages__grid::-webkit-scrollbar {
+    display: none;
   }
 
   .advantages__card {
@@ -917,17 +924,24 @@
     display: block;
     width: 100%;
     min-width: 0;
-    overflow: hidden;
-    touch-action: pan-y;
+    overflow: visible;
   }
 
   .advantages__grid {
     display: flex;
     flex-wrap: nowrap;
     align-items: stretch;
-    width: max-content;
+    width: 100%;
     gap: 12px;
-    will-change: transform;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    touch-action: pan-x;
+  }
+
+  .advantages__grid::-webkit-scrollbar {
+    display: none;
   }
 
   .advantages__card {
