@@ -264,9 +264,11 @@ const createAdvantagesTouchCarousel = () => {
   // Сбрасываем transform от старой версии карусели
   track.style.transform = '';
   track.style.transition = '';
+  viewport.scrollLeft = 0;
+  track.scrollLeft = 0;
 
-  // Элемент с горизонтальной прокруткой — лента карточек
-  const scrollElement = track;
+  // Контейнер горизонтальной прокрутки — viewport, не лента
+  const scrollElement = viewport;
 
   // Текущее смещение ленты в пикселях
   let currentOffset = 0;
@@ -276,6 +278,9 @@ const createAdvantagesTouchCarousel = () => {
 
   // Флаг паузы автопрокрутки после ручного управления
   let isAutoScrollPaused = false;
+
+  // Флаг активного касания — блокирует автопрокрутку на iOS
+  let isUserTouching = false;
 
   // Id кадра requestAnimationFrame для автопрокрутки
   let autoScrollFrameId = null;
@@ -290,7 +295,7 @@ const createAdvantagesTouchCarousel = () => {
   const autoScrollSpeedPxPerMs = 0.028;
 
   // Пауза автопрокрутки после ручного управления, мс
-  const autoScrollPauseMs = 1000;
+  const autoScrollPauseMs = 1500;
 
   // Ширина одной карточки плюс промежуток между ними
   const getScrollStep = () => {
@@ -346,7 +351,7 @@ const createAdvantagesTouchCarousel = () => {
 
   // Плавная автопрокрутка: вправо до конца, затем влево до начала
   const animateAutoScroll = (timestamp) => {
-    if (!isAutoScrollPaused) {
+    if (!isAutoScrollPaused && !isUserTouching) {
       const maxOffset = getMaxOffset();
 
       if (maxOffset > 0) {
@@ -408,33 +413,80 @@ const createAdvantagesTouchCarousel = () => {
     event.preventDefault();
   };
 
-  // Синхронизация offset при ручном свайпе и пауза автопрокрутки
-  const onScroll = () => {
-    currentOffset = scrollElement.scrollLeft;
+  // Стартовая X-координата touch
+  let touchStartX = 0;
 
-    if (!isAutoScrollPaused) {
+  // Стартовая Y-координата touch
+  let touchStartY = 0;
+
+  // scrollLeft на момент начала touch
+  let touchStartScrollLeft = 0;
+
+  // Направление жеста: null — ещё не определено, true — горизонтальный
+  let isHorizontalTouch = null;
+
+  // Порог определения направления жеста, px
+  const touchDirectionThreshold = 8;
+
+  // Обработчик начала touch
+  const onTouchStart = (event) => {
+    if (!event.touches[0]) {
       return;
     }
 
+    isUserTouching = true;
+    isHorizontalTouch = null;
+    touchStartX = event.touches[0].clientX;
+    touchStartY = event.touches[0].clientY;
+    touchStartScrollLeft = scrollElement.scrollLeft;
+    pauseAutoScroll();
+  };
+
+  // Обработчик движения touch — ручной свайп для iOS
+  const onTouchMove = (event) => {
+    if (!isUserTouching || !event.touches[0]) {
+      return;
+    }
+
+    const currentX = event.touches[0].clientX;
+    const currentY = event.touches[0].clientY;
+    const deltaX = touchStartX - currentX;
+    const deltaY = touchStartY - currentY;
+
+    if (isHorizontalTouch === null) {
+      if (Math.abs(deltaX) < touchDirectionThreshold && Math.abs(deltaY) < touchDirectionThreshold) {
+        return;
+      }
+
+      isHorizontalTouch = Math.abs(deltaX) >= Math.abs(deltaY);
+
+      if (!isHorizontalTouch) {
+        isUserTouching = false;
+        return;
+      }
+    }
+
+    scrollElement.scrollLeft = touchStartScrollLeft + deltaX;
+    currentOffset = scrollElement.scrollLeft;
+    updateControls();
+    event.preventDefault();
+  };
+
+  // Обработчик завершения touch
+  const onTouchEnd = () => {
+    currentOffset = scrollElement.scrollLeft;
+    isHorizontalTouch = null;
+    isUserTouching = false;
     pauseAutoScroll();
     updateControls();
   };
 
-  // Пауза автопрокрутки при касании ленты
-  const onTouchStart = () => {
-    pauseAutoScroll();
-  };
-
-  // Пауза автопрокрутки при движении пальца
-  const onTouchMove = () => {
-    pauseAutoScroll();
-  };
-
   prevButton.addEventListener('click', onPrevClick);
   nextButton.addEventListener('click', onNextClick);
-  scrollElement.addEventListener('scroll', onScroll, { passive: true });
-  scrollElement.addEventListener('touchstart', onTouchStart, { passive: true });
-  scrollElement.addEventListener('touchmove', onTouchMove, { passive: true });
+  scrollElement.addEventListener('touchstart', onTouchStart, { passive: true, capture: true });
+  scrollElement.addEventListener('touchmove', onTouchMove, { passive: false, capture: true });
+  scrollElement.addEventListener('touchend', onTouchEnd, { passive: true, capture: true });
+  scrollElement.addEventListener('touchcancel', onTouchEnd, { passive: true, capture: true });
   scrollElement.addEventListener('wheel', onWheel, { passive: false });
 
   const onResize = () => {
@@ -453,9 +505,10 @@ const createAdvantagesTouchCarousel = () => {
   return () => {
     prevButton.removeEventListener('click', onPrevClick);
     nextButton.removeEventListener('click', onNextClick);
-    scrollElement.removeEventListener('scroll', onScroll);
-    scrollElement.removeEventListener('touchstart', onTouchStart);
-    scrollElement.removeEventListener('touchmove', onTouchMove);
+    scrollElement.removeEventListener('touchstart', onTouchStart, { capture: true });
+    scrollElement.removeEventListener('touchmove', onTouchMove, { capture: true });
+    scrollElement.removeEventListener('touchend', onTouchEnd, { capture: true });
+    scrollElement.removeEventListener('touchcancel', onTouchEnd, { capture: true });
     scrollElement.removeEventListener('wheel', onWheel);
     window.removeEventListener('resize', onResize);
 

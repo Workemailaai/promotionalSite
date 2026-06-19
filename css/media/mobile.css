@@ -493,6 +493,10 @@
     padding-top: 48px;
     padding-bottom: 48px;
     padding-left: 26px;
+  }
+
+  #advantages,
+  .advantages.section {
     overflow: visible;
   }
 
@@ -526,27 +530,28 @@
     width: 100%;
     min-width: 0;
     max-width: 100%;
-    overflow: visible;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+    touch-action: pan-y;
+  }
+
+  .advantages__viewport::-webkit-scrollbar {
+    display: none;
   }
 
   .advantages__grid {
     display: flex;
     flex-wrap: nowrap;
     align-items: stretch;
-    width: 100%;
+    width: max-content;
     gap: 16px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    touch-action: pan-x;
-  }
-
-  .advantages__grid::-webkit-scrollbar {
-    display: none;
   }
 
   .advantages__card {
+    flex: 0 0 266px;
     flex-shrink: 0;
     width: 266px;
     height: 266px;

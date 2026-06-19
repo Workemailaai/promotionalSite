@@ -330,29 +330,35 @@
     max-width: 100%;
   }
 
+  #advantages,
+  .advantages.section {
+    overflow: visible;
+  }
+
   .advantages__viewport {
     width: 100%;
     max-width: 100%;
-    overflow: visible;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+    touch-action: pan-y;
+  }
+
+  .advantages__viewport::-webkit-scrollbar {
+    display: none;
   }
 
   .advantages__grid {
     display: flex;
     flex-wrap: nowrap;
-    width: 100%;
+    width: max-content;
     gap: 12px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    touch-action: pan-x;
-  }
-
-  .advantages__grid::-webkit-scrollbar {
-    display: none;
   }
 
   .advantages__card {
+    flex: 0 0 353px;
     flex-shrink: 0;
     width: 353px;
     min-height: 353px;
@@ -920,31 +926,37 @@
     min-width: 0;
   }
 
+  #advantages,
+  .advantages.section {
+    overflow: visible;
+  }
+
   .advantages__viewport {
     display: block;
     width: 100%;
     min-width: 0;
-    overflow: visible;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+    touch-action: pan-y;
+  }
+
+  .advantages__viewport::-webkit-scrollbar {
+    display: none;
   }
 
   .advantages__grid {
     display: flex;
     flex-wrap: nowrap;
     align-items: stretch;
-    width: 100%;
+    width: max-content;
     gap: 12px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    touch-action: pan-x;
-  }
-
-  .advantages__grid::-webkit-scrollbar {
-    display: none;
   }
 
   .advantages__card {
+    flex: 0 0 354px;
     flex-shrink: 0;
     width: 354px;
     height: 354px;
