@@ -278,6 +278,21 @@
   font-weight: 400;
 }
 
+.header__link {
+  display: inline-block;
+}
+
+.header__link::before {
+  content: attr(data-text);
+  display: block;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  font-weight: 500;
+  pointer-events: none;
+  user-select: none;
+}
+
 .header__link:hover,
 .header__link--active {
   color: #222631;
