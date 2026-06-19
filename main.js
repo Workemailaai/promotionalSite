@@ -23,9 +23,6 @@ const isTouchScrollMode = () => window.matchMedia(`(max-width: ${TOUCH_SCROLL_MA
 // Функция очистки карусели «Преимущества»
 let destroyAdvantagesCarousel = null;
 
-// Функция очистки горизонтального скролла «Преимущества»
-let destroyAdvantagesTouchScroll = null;
-
 // Функция очистки колоды «Сценарии»
 let destroyCasesDeck = null;
 
@@ -35,7 +32,7 @@ let destroyCasesScrollDots = null;
 // Текущий брейкпоинт колоды «Сценарии» для переинициализации при смене ширины
 let casesDeckBreakpoint = '';
 
-// Создание карусели карточек в блоке «Преимущества» (только с 1440px)
+// Создание карусели карточек в блоке «Преимущества» на всех брейкпоинтах
 const createAdvantagesCarousel = () => {
   // Контейнер с обрезкой видимой области
   const viewport = document.querySelector('.advantages__viewport');
@@ -60,6 +57,27 @@ const createAdvantagesCarousel = () => {
   // Текущее смещение ленты в пикселях
   let currentOffset = 0;
 
+  // Направление автопрокрутки: 1 — вправо, -1 — влево
+  let autoScrollDirection = 1;
+
+  // Флаг паузы автопрокрутки после ручного управления
+  let isAutoScrollPaused = false;
+
+  // Id кадра requestAnimationFrame для автопрокрутки
+  let autoScrollFrameId = null;
+
+  // Таймер возобновления автопрокрутки после ручного управления
+  let autoScrollResumeTimerId = null;
+
+  // Метка времени предыдущего кадра автопрокрутки
+  let autoScrollPreviousTime = null;
+
+  // Скорость автопрокрутки в пикселях за миллисекунду
+  const autoScrollSpeedPxPerMs = 0.028;
+
+  // Пауза автопрокрутки после ручного управления, мс
+  const autoScrollPauseMs = 1000;
+
   // Ширина одной карточки плюс промежуток между ними
   const getScrollStep = () => {
     const trackStyles = window.getComputedStyle(track);
@@ -75,7 +93,7 @@ const createAdvantagesCarousel = () => {
   const updateControls = () => {
     const maxOffset = getMaxOffset();
     const isAtStart = currentOffset <= 0;
-    const isAtEnd = currentOffset >= maxOffset;
+    const isAtEnd = currentOffset >= maxOffset - 1;
 
     prevButton.classList.toggle('advantages__arrow--disabled', isAtStart);
     nextButton.classList.toggle('advantages__arrow--disabled', isAtEnd);
@@ -84,18 +102,65 @@ const createAdvantagesCarousel = () => {
   };
 
   // Применение смещения к ленте карточек
-  const applyOffset = () => {
+  const applyOffset = (shouldAnimate = false) => {
     const maxOffset = getMaxOffset();
 
     currentOffset = Math.max(0, Math.min(currentOffset, maxOffset));
-    track.style.transform = `translateX(-${currentOffset}px)`;
+    track.style.transition = shouldAnimate ? 'transform 0.4s ease' : 'none';
+    track.style.transform = `translate3d(-${currentOffset}px, 0, 0)`;
     updateControls();
+  };
+
+  // Пауза автопрокрутки при ручном управлении
+  const pauseAutoScroll = () => {
+    isAutoScrollPaused = true;
+
+    if (autoScrollResumeTimerId) {
+      clearTimeout(autoScrollResumeTimerId);
+    }
+
+    autoScrollResumeTimerId = setTimeout(() => {
+      isAutoScrollPaused = false;
+      autoScrollPreviousTime = null;
+    }, autoScrollPauseMs);
+  };
+
+  // Плавная автопрокрутка: вправо до конца, затем влево до начала
+  const animateAutoScroll = (timestamp) => {
+    if (!isAutoScrollPaused) {
+      const maxOffset = getMaxOffset();
+
+      if (maxOffset > 0) {
+        if (autoScrollPreviousTime === null) {
+          autoScrollPreviousTime = timestamp;
+        }
+
+        const deltaMs = timestamp - autoScrollPreviousTime;
+        autoScrollPreviousTime = timestamp;
+        currentOffset += autoScrollDirection * autoScrollSpeedPxPerMs * deltaMs;
+
+        if (currentOffset >= maxOffset) {
+          currentOffset = maxOffset;
+          autoScrollDirection = -1;
+        } else if (currentOffset <= 0) {
+          currentOffset = 0;
+          autoScrollDirection = 1;
+        }
+
+        applyOffset(false);
+      }
+    } else {
+      autoScrollPreviousTime = null;
+    }
+
+    autoScrollFrameId = requestAnimationFrame(animateAutoScroll);
   };
 
   // Сдвиг ленты на одну карточку в заданном направлении
   const scrollByStep = (direction) => {
+    pauseAutoScroll();
     currentOffset += direction * getScrollStep();
-    applyOffset();
+    applyOffset(true);
   };
 
   // Обработчик клика по кнопке «назад»
@@ -108,16 +173,64 @@ const createAdvantagesCarousel = () => {
     scrollByStep(1);
   };
 
+  // Вертикальное колесо прокручивает ленту по горизонтали
+  const onWheel = (event) => {
+    if (viewport.scrollWidth <= viewport.clientWidth) {
+      return;
+    }
+
+    if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) {
+      return;
+    }
+
+    pauseAutoScroll();
+    currentOffset += event.deltaY;
+    applyOffset(false);
+    event.preventDefault();
+  };
+
+  // Пауза автопрокрутки при касании ленты
+  const onTouchStart = () => {
+    pauseAutoScroll();
+  };
+
   prevButton.addEventListener('click', onPrevClick);
   nextButton.addEventListener('click', onNextClick);
-  window.addEventListener('resize', applyOffset);
-  applyOffset();
+  viewport.addEventListener('touchstart', onTouchStart, { passive: true });
+  viewport.addEventListener('wheel', onWheel, { passive: false });
+
+  const onResize = () => {
+    applyOffset(false);
+  };
+
+  window.addEventListener('resize', onResize);
+  applyOffset(false);
+
+  const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!isReducedMotion) {
+    autoScrollFrameId = requestAnimationFrame(animateAutoScroll);
+  }
 
   return () => {
     prevButton.removeEventListener('click', onPrevClick);
     nextButton.removeEventListener('click', onNextClick);
-    window.removeEventListener('resize', applyOffset);
+    viewport.removeEventListener('touchstart', onTouchStart);
+    viewport.removeEventListener('wheel', onWheel);
+    window.removeEventListener('resize', onResize);
+
+    if (autoScrollFrameId) {
+      cancelAnimationFrame(autoScrollFrameId);
+      autoScrollFrameId = null;
+    }
+
+    if (autoScrollResumeTimerId) {
+      clearTimeout(autoScrollResumeTimerId);
+      autoScrollResumeTimerId = null;
+    }
+
     track.style.transform = '';
+    track.style.transition = '';
     prevButton.classList.remove('advantages__arrow--disabled');
     nextButton.classList.remove('advantages__arrow--disabled');
     prevButton.disabled = false;
@@ -410,66 +523,13 @@ const createCasesDeck = () => {
   };
 };
 
-// Горизонтальный скролл ленты «Преимущества» колесом и свайпом
-const createAdvantagesTouchScroll = () => {
-  // Контейнер с overflow-x для прокрутки карточек
-  const viewport = document.querySelector('.advantages__viewport');
-
-  if (!viewport) {
-    return null;
-  }
-
-  // Обработчик колеса: вертикальный жест прокручивает ленту по горизонтали
-  const onWheel = (event) => {
-    if (viewport.scrollWidth <= viewport.clientWidth) {
-      return;
-    }
-
-    if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) {
-      return;
-    }
-
-    viewport.scrollLeft += event.deltaY;
-    event.preventDefault();
-  };
-
-  viewport.addEventListener('wheel', onWheel, { passive: false });
-
-  return () => {
-    viewport.removeEventListener('wheel', onWheel);
-  };
-};
-
-// Переключение карусели «Преимущества» между режимами carousel и touch-scroll
+// Переключение карусели «Преимущества» с учётом брейкпоинта
 const setupAdvantagesCarousel = () => {
-  // Лента карточек для сброса inline-стилей
-  const track = document.querySelector('.advantages__grid');
-
-  if (isTouchScrollMode()) {
-    if (destroyAdvantagesCarousel) {
-      destroyAdvantagesCarousel();
-      destroyAdvantagesCarousel = null;
-    }
-
-    if (track) {
-      track.style.transform = '';
-    }
-
-    if (!destroyAdvantagesTouchScroll) {
-      destroyAdvantagesTouchScroll = createAdvantagesTouchScroll();
-    }
-
+  if (destroyAdvantagesCarousel) {
     return;
   }
 
-  if (destroyAdvantagesTouchScroll) {
-    destroyAdvantagesTouchScroll();
-    destroyAdvantagesTouchScroll = null;
-  }
-
-  if (!destroyAdvantagesCarousel) {
-    destroyAdvantagesCarousel = createAdvantagesCarousel();
-  }
+  destroyAdvantagesCarousel = createAdvantagesCarousel();
 };
 
 // Синхронизация точек пагинации со скроллом карточек «Сценарии» (только mobile)
@@ -497,17 +557,15 @@ const createCasesScrollDots = () => {
     return null;
   }
 
-  // Обновление активной точки по положению карточки в видимой области
+  // Обновление активной точки по карточке у левого края ленты
   const updateActiveDot = () => {
     const stackRect = stack.getBoundingClientRect();
-    const stackCenter = stackRect.left + stackRect.width / 2;
     let activeIndex = 0;
     let minDistance = Infinity;
 
     cards.forEach((card, cardIndex) => {
       const cardRect = card.getBoundingClientRect();
-      const cardCenter = cardRect.left + cardRect.width / 2;
-      const distance = Math.abs(cardCenter - stackCenter);
+      const distance = Math.abs(cardRect.left - stackRect.left);
 
       if (distance < minDistance) {
         minDistance = distance;
@@ -531,7 +589,7 @@ const createCasesScrollDots = () => {
 
     targetCard.scrollIntoView({
       behavior: 'smooth',
-      inline: 'center',
+      inline: 'start',
       block: 'nearest',
     });
   };
